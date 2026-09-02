@@ -20,7 +20,6 @@
    - (Note: new keys can take 10-60 minutes to activate)
 
 4. **Set up your `.env` file**
-   - Rename `.env.example` to `.env`
    - Paste your key in:
      ```
      OPENWEATHER_API_KEY=paste_your_real_key_here
