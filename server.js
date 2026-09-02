@@ -54,6 +54,72 @@ app.get('/api/weather', async (req, res) => {
   }
 });
 
+// NEW: 5-day forecast endpoint.
+// OpenWeatherMap's free forecast API gives readings every 3 hours (40 total
+// over 5 days), not one-per-day. We pick the reading closest to midday for
+// each date, and also track the min/max temperature seen that day.
+// Example: fetch('/api/forecast?city=London')
+app.get('/api/forecast', async (req, res) => {
+  const city = req.query.city;
+
+  if (!city) {
+    return res.status(400).json({ error: 'Please provide a city name' });
+  }
+
+  const apiKey = process.env.OPENWEATHER_API_KEY;
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: data.message || 'Something went wrong' });
+    }
+
+    // Group the 3-hour entries by calendar date (YYYY-MM-DD)
+    const byDate = {};
+    for (const entry of data.list) {
+      const date = entry.dt_txt.split(' ')[0]; // "2026-09-02 15:00:00" -> "2026-09-02"
+      if (!byDate[date]) byDate[date] = [];
+      byDate[date].push(entry);
+    }
+
+    // Turn each day's group of entries into one summary object
+    const days = Object.keys(byDate)
+      .slice(0, 5) // only need 5 days
+      .map((date) => {
+        const entries = byDate[date];
+
+        // Pick the entry closest to 12:00 to represent "the weather that day"
+        const midday = entries.reduce((closest, entry) => {
+          const hour = parseInt(entry.dt_txt.split(' ')[1].split(':')[0], 10);
+          const closestHour = parseInt(closest.dt_txt.split(' ')[1].split(':')[0], 10);
+          return Math.abs(hour - 12) < Math.abs(closestHour - 12) ? entry : closest;
+        }, entries[0]);
+
+        const temps = entries.map((e) => e.main.temp);
+
+        return {
+          date,
+          min_temp: Math.min(...temps),
+          max_temp: Math.max(...temps),
+          description: midday.weather[0].description,
+          icon: midday.weather[0].icon,
+        };
+      });
+
+    res.json({
+      city: data.city.name,
+      country: data.city.country,
+      days,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error while fetching forecast' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

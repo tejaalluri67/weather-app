@@ -62,8 +62,8 @@ Browser (displays it)
 Your API key **never appears in the browser** — only your server sees it. This is the standard, secure pattern for any app that uses a third-party API.
 
 ## Things to try next (once it works)
-- Add a "recent searches" list (stored in the browser)
-- Add a 5-day forecast (OpenWeatherMap has a forecast endpoint too)
+- ~~Add a 5-day forecast~~ ✅ done — see the Forecast tab
+- ~~Add a "recent searches" list~~ ✅ done — see the Cities tab (stored in your browser's localStorage)
 - Add error handling for typos / empty results
 - Deploy it: frontend+backend together on **Render** or **Railway** (both have free tiers)
 - Swap plain JS for React once you're comfortable
