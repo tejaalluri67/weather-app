@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SkyClear Weather</title>
+<title>Weather</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -123,7 +123,7 @@
   <button aria-label="Menu" class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloud</span>
   </button>
-  <h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary-fixed-dim">SkyClear</h1>
+  <h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary-fixed-dim">Weather</h1>
   <button id="themeToggle" aria-label="Toggle dark mode" class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform">
     <span id="themeIcon" class="material-symbols-outlined">dark_mode</span>
   </button>
@@ -248,7 +248,7 @@
 </main>
 
 <!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-inverse-surface/90 shadow-[0_-4px_20px_rgba(0,98,159,0.1)] rounded-t-xl backdrop-blur-md md:hidden">
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-inverse-surface/90 shadow-[0_-4px_20px_rgba(0,98,159,0.1)] rounded-t-xl backdrop-blur-md">
   <button id="navToday" class="nav-btn flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:scale-90 transition-all duration-200">
     <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">today</span>
     <span class="font-label-caps text-label-caps">Today</span>
