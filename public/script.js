@@ -1,7 +1,3 @@
-// script.js
-// Runs in the BROWSER. Only talks to OUR backend (/api/weather, /api/forecast) —
-// never directly to OpenWeatherMap (see server.js for why).
-
 const cityInput = document.getElementById('cityInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchBar = document.getElementById('searchBar');
@@ -39,14 +35,12 @@ const navToday = document.getElementById('navToday');
 const navForecast = document.getElementById('navForecast');
 const navCities = document.getElementById('navCities');
 
-// Tracks whichever city the "Today" tab last successfully showed,
-// so the Forecast tab knows what to fetch.
 let currentCity = null;
 
 const RECENT_KEY = 'recentSearches';
 const MAX_RECENT = 6;
 
-// ---------- "Today" tab logic ----------
+// ---------- Today tab ----------
 
 function showTodayState(state) {
   [emptyState, loadingState, errorState, resultState].forEach((el) => {
@@ -173,7 +167,7 @@ async function loadForecast() {
   forecastList.classList.add('hidden-state');
   forecastLoading.classList.remove('hidden-state');
 
-  const cityQuery = currentCity.split(',')[0]; // just the city name for the API call
+  const cityQuery = currentCity.split(',')[0];
 
   try {
     const response = await fetch(`/api/forecast?city=${encodeURIComponent(cityQuery)}`);
@@ -224,7 +218,6 @@ function switchTab(tab) {
     btn.classList.add('bg-primary-container', 'dark:bg-primary', 'text-on-primary-container', 'dark:text-on-primary');
   };
 
-  // Hide all top-level panels first
   searchBar.classList.add('hidden-state');
   [emptyState, loadingState, errorState, resultState].forEach((el) => el.classList.add('hidden-state'));
   forecastPanel.classList.add('hidden-state');
@@ -234,7 +227,6 @@ function switchTab(tab) {
   if (tab === 'today') {
     activate(navToday);
     searchBar.classList.remove('hidden-state');
-    // Show the result if we already have a city, otherwise the empty prompt
     showTodayState(currentCity ? resultState : emptyState);
     if (currentCity) {
       updatedText.classList.remove('hidden-state');

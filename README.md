@@ -1,68 +1,107 @@
-# Weather App — Setup Guide
+# SkyClear — Weather App
 
-## What you're running
-- `server.js` → your **backend** (Node.js + Express)
-- `public/` → your **frontend** (plain HTML/CSS/JS)
-- Your backend calls the **OpenWeatherMap API** and forwards clean data to your frontend
+A full-stack weather app built as a first project to learn how a frontend, a backend, and a third-party API all fit together. Search any city to see current conditions, a 5-day forecast, and quickly revisit recently searched cities — with light/dark mode support.
 
-## Steps to run it locally
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
+![OpenWeatherMap](https://img.shields.io/badge/API-OpenWeatherMap-orange)
 
-1. **Install Node.js** (if you don't have it): https://nodejs.org (LTS version)
+## Features
 
-2. **Open a terminal in this folder** and install dependencies:
-   ```
-   npm install
-   ```
+- 🔍 **Search any city** for its current weather
+- 🌡️ **Current conditions**: temperature, feels-like, description, humidity, wind speed
+- 📅 **5-day forecast** — daily highs/lows and conditions
+- 🕑 **Recent searches** — your last few cities, saved locally, one tap to revisit
+- 🌙 **Dark mode** — toggle manually, or it follows your system preference by default
+- 📱 Responsive layout with a mobile-style bottom nav (Today / Forecast / Cities)
 
-3. **Get your API key**
-   - Sign up free at https://openweathermap.org/api
-   - Copy your API key from your account dashboard
-   - (Note: new keys can take 10-60 minutes to activate)
+## Tech stack
 
-4. **Set up your `.env` file**
-   - Paste your key in:
-     ```
-     OPENWEATHER_API_KEY=paste_your_real_key_here
-     ```
+| Layer | Tech |
+|---|---|
+| Frontend | HTML, Tailwind CSS (CDN), vanilla JavaScript |
+| Backend | Node.js, Express |
+| External API | [OpenWeatherMap](https://openweathermap.org/api) (current weather + 5-day/3-hour forecast) |
+| Storage | Browser `localStorage` (recent searches, theme preference) — no database |
 
-5. **Run the server**
-   ```
-   npm start
-   ```
-   While actively editing code, use this instead — it auto-restarts the server every time you save a file, so you don't need to stop/start it manually:
-   ```
-   npm run dev
-   ```
-
-6. **Open your browser** to:
-   ```
-   http://localhost:3000
-   ```
-
-7. Type a city name and hit Search 🎉
-
-## How the data flows (the important part)
+## How it works
 
 ```
 Browser (script.js)
-   │  fetch('/api/weather?city=London')
+   │  fetch('/api/weather?city=Hyderabad')
+   │  fetch('/api/forecast?city=Hyderabad')
    ▼
 Your Server (server.js)
    │  fetch('https://api.openweathermap.org/...&appid=SECRET_KEY')
    ▼
 OpenWeatherMap API
-   │  returns raw weather data
+   │  returns raw weather/forecast data
    ▼
 Your Server (cleans up the data, hides the secret key)
    ▼
-Browser (displays it)
+Browser (renders it)
 ```
 
-Your API key **never appears in the browser** — only your server sees it. This is the standard, secure pattern for any app that uses a third-party API.
+The browser never talks to OpenWeatherMap directly and never sees the API key — every request is proxied through the Express backend. This is the standard pattern for any app that wraps a third-party API.
 
-## Things to try next (once it works)
-- ~~Add a 5-day forecast~~ ✅ done — see the Forecast tab
-- ~~Add a "recent searches" list~~ ✅ done — see the Cities tab (stored in your browser's localStorage)
-- Add error handling for typos / empty results
-- Deploy it: frontend+backend together on **Render** or **Railway** (both have free tiers)
-- Swap plain JS for React once you're comfortable
+## Project structure
+
+```
+weather-app/
+├── server.js           # Express backend: /api/weather and /api/forecast endpoints
+├── package.json
+├── .env.example         # Template for your API key
+├── public/
+│   ├── index.html        # UI markup for all app states (empty/loading/error/result/forecast/cities)
+│   └── script.js         # Frontend logic: API calls, tab switching, dark mode, recent searches
+└── README.md
+```
+
+## Getting started
+
+### 1. Install dependencies
+```bash
+npm install
+```
+
+### 2. Get a free API key
+Sign up at [openweathermap.org/api](https://openweathermap.org/api) and grab your key from your account dashboard. New keys can take up to an hour to activate.
+
+### 3. Set up your environment file
+Rename `.env.example` to `.env` and add your key:
+```
+OPENWEATHER_API_KEY=your_real_key_here
+```
+
+### 4. Run it
+```bash
+npm start
+```
+Or, while actively developing (auto-restarts on file changes):
+```bash
+npm run dev
+```
+
+### 5. Open it
+Visit **http://localhost:3000**
+
+## API endpoints (backend)
+
+| Endpoint | Description |
+|---|---|
+| `GET /api/weather?city=<name>` | Returns current conditions for a city |
+| `GET /api/forecast?city=<name>` | Returns a 5-day forecast summary for a city |
+
+Both proxy to OpenWeatherMap and return trimmed-down JSON tailored to what the frontend needs.
+
+## Ideas for extending this further
+
+- Add geolocation ("use my current location" button)
+- Show hourly forecast for the current day
+- Add unit toggle (°C / °F)
+- Deploy it (Render/Railway both have free tiers for Node apps)
+- Rebuild the frontend in React once comfortable with the vanilla JS version
+
+## License
+
+This project is for personal learning purposes — feel free to fork and build on it.
