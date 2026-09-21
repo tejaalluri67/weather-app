@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Weather</title>
+<title>SkyClear Weather</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -116,7 +116,7 @@
     .hidden-state { display: none !important; }
 </style>
 </head>
-<body class="bg-gradient-to-br from-surface-variant to-primary-container dark:from-[#0b1220] dark:to-[#132a44] min-h-screen text-on-surface dark:text-inverse-on-surface flex flex-col font-body-md text-body-md overflow-x-hidden pt-16 pb-20 md:pb-0 transition-colors duration-300">
+<body class="bg-gradient-to-br from-surface-variant to-primary-container dark:from-[#0b1220] dark:to-[#132a44] min-h-screen text-on-surface dark:text-inverse-on-surface flex flex-col font-body-md text-body-md overflow-x-hidden pt-16 pb-28 transition-colors duration-300">
 
 <!-- TopAppBar -->
 <header class="fixed top-0 w-full bg-transparent flex items-center justify-between px-container-padding-mobile h-16 z-50">
@@ -248,7 +248,7 @@
 </main>
 
 <!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/80 dark:bg-inverse-surface/90 shadow-[0_-4px_20px_rgba(0,98,159,0.1)] rounded-t-xl backdrop-blur-md">
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 bg-white/80 dark:bg-inverse-surface/90 shadow-[0_-4px_20px_rgba(0,98,159,0.1)] rounded-t-xl backdrop-blur-md" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);">
   <button id="navToday" class="nav-btn flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:scale-90 transition-all duration-200">
     <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">today</span>
     <span class="font-label-caps text-label-caps">Today</span>
