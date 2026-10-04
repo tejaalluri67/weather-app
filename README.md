@@ -1,4 +1,4 @@
-# SkyClear — Weather App
+#Weather App
 
 A full-stack weather app built as a first project to learn how a frontend, a backend, and a third-party API all fit together. Search any city to see current conditions, a 5-day forecast, and quickly revisit recently searched cities — with light/dark mode support.
 
